@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/imageHeader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:background="@color/colorPrimaryDark"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_image"
+        app:layout_constraintBottom_toBottomOf="@+id/imageHeader"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        />
+
+    <ImageView
+        android:id="@+id/imageEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_event"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="@+id/editEventName"
+        app:layout_constraintBottom_toBottomOf="@id/editEventName"
+        />
+
+    <EditText
+        android:id="@+id/editEventName"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:hint="Name"
+        android:background="@drawable/drawable_bottom_line"
+        android:theme="@style/NoneColorEditText"
+        app:layout_constraintStart_toStartOf="@id/guide"
+        app:layout_constraintTop_toBottomOf="@+id/imageHeader"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        />
+
+    <ImageView
+        android:id="@+id/imageClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_clock"
+        app:layout_constraintStart_toEndOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="@+id/textDate"
+        app:layout_constraintBottom_toBottomOf="@id/textDate"
+        />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:textSize="14sp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/drawable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        tools:text="2018/01/01"
+        app:layout_constraintTop_toBottomOf="@+id/editEventName"
+        app:layout_constraintStart_toStartOf="@id/guide"
+        app:layout_constraintEnd_toStartOf="@id/textTime"
+        app:layout_constraintHorizontal_weight="3"
+        />
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="center_vertical|end"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/drawable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        tools:text="23:59"
+        app:layout_constraintTop_toBottomOf="@+id/editEventName"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toEndOf="@id/textDate"
+        app:layout_constraintHorizontal_weight="2"
+        />
+
+    <ImageView
+        android:id="@+id/imageCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_category"
+        app:layout_constraintStart_toEndOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="@+id/editCategory"
+        app:layout_constraintBottom_toBottomOf="@+id/editCategory"
+        />
+
+    <AutoCompleteTextView
+        android:id="@+id/editCategory"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:hint="Category"
+        android:background="@drawable/drawable_bottom_line"
+        android:theme="@style/NoneColorEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textDate"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guide"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="72dp"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"
+        />
+</android.support.constraint.ConstraintLayout>
