@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="event"
+            type="net.yuzumone.recordachi.model.Event"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="2dp"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/imageHeader"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/blue_700"
+                android:visibility="@{event.image == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{event.name}"
+                android:textColor="@{event.image == null ? @android:color/black : @android:color/white}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintStart_toStartOf="@id/guideStart"
+                app:layout_constraintEnd_toEndOf="@id/guideEnd"
+                app:layout_constraintVertical_bias="1"
+                tools:text="EventName"
+                style="@style/TextAppearance.AppCompat.Headline"
+                />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#10000000"
+                android:visibility="@{event.image == null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@+id/buttonCheck"
+                />
+
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/buttonCheck"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonCheck"
+                app:layout_constraintStart_toStartOf="@id/guideStart"
+                android:text="10days"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@null"
+                android:src="@drawable/ic_check"
+                app:layout_constraintTop_toBottomOf="@+id/imageHeader"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_goneMarginTop="32dp"
+                />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp"
+                />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</layout>
