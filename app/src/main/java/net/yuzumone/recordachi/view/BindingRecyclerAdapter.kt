@@ -5,10 +5,12 @@ import android.support.annotation.UiThread
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
-abstract class BindingAdapter<T, V : ViewDataBinding> :
+abstract class BindingRecyclerAdapter<T, V : ViewDataBinding> :
         RecyclerView.Adapter<BindingHolder<V>>(), Iterable<T> {
 
     private var items: List<T>? = null
+    private var clickCallback: ItemClickCallback? = null
+    private var longClickCallback: ItemLongClickCallback? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<V> {
         val binding = createBinding(parent)
@@ -19,6 +21,13 @@ abstract class BindingAdapter<T, V : ViewDataBinding> :
 
     override fun onBindViewHolder(holder: BindingHolder<V>, position: Int) {
         bind(holder.binding, items!![position])
+        holder.binding.root.setOnClickListener {
+            clickCallback?.onItemClick(holder.itemView, position)
+        }
+        holder.binding.root.setOnLongClickListener {
+            longClickCallback?.onItemLongClick(holder.itemView, position)
+            true
+        }
         holder.binding.executePendingBindings()
     }
 
@@ -40,6 +49,18 @@ abstract class BindingAdapter<T, V : ViewDataBinding> :
             items = update
             notifyDataSetChanged()
         }
+    }
+
+    fun getItem(position: Int): T {
+        return items!![position]
+    }
+
+    fun setItemClickCallback(callback: ItemClickCallback) {
+        this.clickCallback = callback
+    }
+
+    fun setItemLongClickCallback(callback: ItemLongClickCallback) {
+        this.longClickCallback = callback
     }
 
     override fun getItemCount(): Int {
