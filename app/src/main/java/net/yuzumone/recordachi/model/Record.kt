@@ -12,7 +12,6 @@ import java.util.*
         childColumns = arrayOf("event_id")))])
 data class Record(
         @PrimaryKey val id: String = UUID.randomUUID().toString(),
-        var name: String,
         val time: Long,
         @ColumnInfo(name = "event_id") val eventId: String
 )
