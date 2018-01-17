@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Recordachi</string>
     <string name="name">Name</string>
+    <string name="date_format">%1$d.%2$d.%3$d</string>
+    <string name="time_format">%1$d:%2$d</string>
 </resources>
