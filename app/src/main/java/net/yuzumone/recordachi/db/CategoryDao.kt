@@ -12,6 +12,9 @@ interface CategoryDao {
     @Query("SELECT * FROM Category WHERE id = :id ")
     fun load(id: String): LiveData<Category>
 
+    @Query("SELECT * FROM Category WHERE name = 'none' ")
+    fun noneCategory(): LiveData<Category>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(category: Category)
 

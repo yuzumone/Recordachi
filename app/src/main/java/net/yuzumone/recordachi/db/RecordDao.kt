@@ -12,6 +12,9 @@ interface RecordDao {
     @Query("SELECT * FROM Record WHERE id = :id ")
     fun load(id: String): LiveData<Record>
 
+    @Query("SELECT * FROM Record WHERE event_id = :eventId ")
+    fun loadRecordList(eventId: String): LiveData<List<Record>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(record: Record)
 
