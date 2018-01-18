@@ -3,4 +3,7 @@
     <string name="name">Name</string>
     <string name="date_format">%1$d.%2$d.%3$d</string>
     <string name="time_format">%1$d:%2$d</string>
+    <string name="last_format">Last: %1$s</string>
+    <string name="count_format">Count: %1$d times</string>
+    <string name="average_format">Average: %1$d days</string>
 </resources>
