@@ -1,15 +1,14 @@
 package net.yuzumone.recordachi.model
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 import java.util.*
 
-@Entity(foreignKeys = [(ForeignKey(
+@Entity(indices = [Index("category_id")],
+        foreignKeys = [(ForeignKey(
         entity = Category::class,
         parentColumns = arrayOf("id"),
-        childColumns = arrayOf("category_id")))])
+        childColumns = arrayOf("category_id"),
+        onDelete = ForeignKey.NO_ACTION))])
 data class Event(
         @PrimaryKey val id: String = UUID.randomUUID().toString(),
         var name: String,
