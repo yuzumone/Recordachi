@@ -10,7 +10,7 @@ import net.yuzumone.recordachi.model.Category
 import net.yuzumone.recordachi.model.Event
 import net.yuzumone.recordachi.model.Record
 
-@Database(entities = [(Event::class), (Record::class), (Category::class)], version = 1)
+@Database(entities = [(Event::class), (Record::class), (Category::class)], version = 1, exportSchema = false)
 abstract class AppDb : RoomDatabase() {
     abstract fun eventDao(): EventDao
     abstract fun recordDao(): RecordDao
