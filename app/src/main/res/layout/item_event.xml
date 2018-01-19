@@ -9,7 +9,7 @@
         <import type="android.view.View"/>
         <variable
             name="event"
-            type="net.yuzumone.recordachi.model.Event"/>
+            type="net.yuzumone.recordachi.model.EventCategoryRecords"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -48,7 +48,7 @@
                 android:gravity="bottom"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="@{event.name}"
+                android:text="@{event.eventName}"
                 android:textColor="@{event.image == null ? @android:color/black : @android:color/white}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/view"
@@ -72,10 +72,11 @@
                 android:id="@+id/textTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:records="@{event.records}"
                 app:layout_constraintTop_toTopOf="@+id/buttonCheck"
                 app:layout_constraintBottom_toBottomOf="@+id/buttonCheck"
                 app:layout_constraintStart_toStartOf="@id/guideStart"
-                android:text="10days"
+                tools:text="10days"
                 />
 
             <ImageButton
