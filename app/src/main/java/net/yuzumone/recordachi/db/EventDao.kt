@@ -3,7 +3,7 @@ package net.yuzumone.recordachi.db
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import net.yuzumone.recordachi.model.Event
-import net.yuzumone.recordachi.model.EventWithCategory
+import net.yuzumone.recordachi.model.EventCategoryRecords
 
 @Dao
 interface EventDao {
@@ -13,14 +13,14 @@ interface EventDao {
     @Query("SELECT * FROM Event WHERE id = :id ")
     fun load(id: String): LiveData<Event>
 
-    @Query("SELECT Event.id, Event.name as eventName, Category.name as categoryName, " +
+    @Transaction @Query("SELECT Event.id, Event.name as eventName, Category.name as categoryName, " +
             "Event.image FROM Event INNER JOIN Category ON Event.category_id = Category.id ")
-    fun getAllEventWithCategory(): LiveData<List<EventWithCategory>>
+    fun getAllEventCategoryRecords(): LiveData<List<EventCategoryRecords>>
 
-    @Query("SELECT Event.id, Event.name as eventName, Category.name as categoryName, " +
+    @Transaction @Query("SELECT Event.id, Event.name as eventName, Category.name as categoryName, " +
             "Event.image FROM Event INNER JOIN Category ON Event.category_id = Category.id " +
             "WHERE Event.id = :id ")
-    fun loadEventWithCategory(id: String): LiveData<EventWithCategory>
+    fun loadEventCategoryRecords(id: String): LiveData<EventCategoryRecords>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(event: Event)
