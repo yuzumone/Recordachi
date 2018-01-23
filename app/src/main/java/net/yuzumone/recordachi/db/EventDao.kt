@@ -27,4 +27,7 @@ interface EventDao {
 
     @Delete
     fun delete(event: Event)
+
+    @Query("DELETE FROM Event WHERE id = :id ")
+    fun delete(id: String)
 }

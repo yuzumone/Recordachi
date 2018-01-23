@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import net.yuzumone.recordachi.db.AppDb
+import net.yuzumone.recordachi.extension.ioThread
 import net.yuzumone.recordachi.model.Event
 import net.yuzumone.recordachi.model.Record
 
@@ -17,5 +18,9 @@ class DetailViewModel(app: Application) : AndroidViewModel(app) {
 
     fun records(eventId: String): LiveData<List<Record>> {
         return recordDao.loadRecordList(eventId)
+    }
+
+    fun deleteEvent(id: String) = ioThread {
+        eventDao.delete(id)
     }
 }

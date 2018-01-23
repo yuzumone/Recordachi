@@ -5,9 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_detail.*
 import net.yuzumone.recordachi.R
 import net.yuzumone.recordachi.view.RecordAdapter
@@ -38,6 +37,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view =  inflater?.inflate(R.layout.fragment_detail, container, false)
+        setHasOptionsMenu(true)
         activity.title = ""
         return view
     }
@@ -64,5 +64,20 @@ class DetailFragment : Fragment() {
                 textAverage.text = getString(R.string.average_format, ave)
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_detail, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_delete_event -> {
+                viewModel.deleteEvent(eventId)
+                Toast.makeText(activity, "Delete event", Toast.LENGTH_SHORT).show()
+                fragmentManager.popBackStack()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
