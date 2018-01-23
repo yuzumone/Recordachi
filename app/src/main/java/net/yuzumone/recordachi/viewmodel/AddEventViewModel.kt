@@ -15,6 +15,17 @@ class AddEventViewModel(app: Application) : AndroidViewModel(app) {
 
     val noneCategory = categoryDao.noneCategory()
 
+    fun insert(event: Event, record: Record) = ioThread {
+        eventDao.insert(event)
+        recordDao.insert(record)
+    }
+
+    fun insert(category: Category, event: Event, record: Record) = ioThread {
+        categoryDao.insert(category)
+        eventDao.insert(event)
+        recordDao.insert(record)
+    }
+
     fun insertEvent(event: Event) = ioThread {
         eventDao.insert(event)
     }

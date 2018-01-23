@@ -83,17 +83,14 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
                 viewModel.noneCategory.observe(this, Observer { category ->
                     val event = Event(name = eventName, categoryId = category!!.id)
                     val record = Record(time = time, eventId = event.id)
-                    viewModel.insertEvent(event)
-                    viewModel.insertRecord(record)
+                    viewModel.insert(event, record)
                     fragmentManager.popBackStack()
                 })
             } else {
                 val category = Category(name = categoryName)
                 val event = Event(name = eventName, categoryId = category.id)
                 val record = Record(time = time, eventId = event.id)
-                viewModel.insertCategory(category)
-                viewModel.insertEvent(event)
-                viewModel.insertRecord(record)
+                viewModel.insert(category, event, record)
                 fragmentManager.popBackStack()
             }
         }
