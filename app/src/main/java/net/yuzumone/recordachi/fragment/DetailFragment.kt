@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_detail.*
 import net.yuzumone.recordachi.R
@@ -79,5 +81,13 @@ class DetailFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
+        return if (enter) {
+            AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left)
+        } else {
+            AnimationUtils.loadAnimation(activity, android.R.anim.slide_out_right)
+        }
     }
 }

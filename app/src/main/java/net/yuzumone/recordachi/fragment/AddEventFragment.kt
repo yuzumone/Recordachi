@@ -7,6 +7,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
@@ -93,6 +95,14 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
                 viewModel.insert(category, event, record)
                 fragmentManager.popBackStack()
             }
+        }
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
+        return if (enter) {
+            AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left)
+        } else {
+            AnimationUtils.loadAnimation(activity, android.R.anim.slide_out_right)
         }
     }
 }
