@@ -27,14 +27,14 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
         ViewModelProviders.of(this).get(AddEventViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.fragment_add_event, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_event, container, false)
         setHasOptionsMenu(true)
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         textDate.text = SimpleDateFormat("yyyy.M.dd", Locale.US).format(Date())
         textTime.text = SimpleDateFormat("HH:mm", Locale.US).format(Date())
@@ -86,14 +86,14 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
                     val event = Event(name = eventName, categoryId = category!!.id)
                     val record = Record(time = time, eventId = event.id)
                     viewModel.insert(event, record)
-                    fragmentManager.popBackStack()
+                    fragmentManager?.popBackStack()
                 })
             } else {
                 val category = Category(name = categoryName)
                 val event = Event(name = eventName, categoryId = category.id)
                 val record = Record(time = time, eventId = event.id)
                 viewModel.insert(category, event, record)
-                fragmentManager.popBackStack()
+                fragmentManager?.popBackStack()
             }
         }
     }

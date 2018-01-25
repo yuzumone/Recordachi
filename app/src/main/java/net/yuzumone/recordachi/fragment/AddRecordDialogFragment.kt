@@ -11,7 +11,7 @@ class AddRecordDialogFragment : DialogFragment() {
 
     private lateinit var listener: OnAddRecordListener
     private val eventId by lazy {
-        arguments.getString(ARG_ID)
+        arguments!!.getString(ARG_ID)
     }
 
     companion object {
@@ -37,7 +37,7 @@ class AddRecordDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         this.isCancelable = false
-        return AlertDialog.Builder(activity)
+        return AlertDialog.Builder(activity!!)
                 .setMessage("Add Record now?")
                 .setPositiveButton("OK") { _, _ ->
                     listener.onRecordAdd(eventId)

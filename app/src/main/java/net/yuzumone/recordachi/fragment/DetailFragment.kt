@@ -19,7 +19,7 @@ import java.util.*
 class DetailFragment : Fragment() {
 
     private val eventId by lazy {
-        arguments.getString(ARG_ID)
+        arguments!!.getString(ARG_ID)
     }
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(this).get(DetailViewModel::class.java)
@@ -36,19 +36,19 @@ class DetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view =  inflater?.inflate(R.layout.fragment_detail, container, false)
+        val view =  inflater.inflate(R.layout.fragment_detail, container, false)
         setHasOptionsMenu(true)
-        activity.title = ""
+        activity?.title = ""
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.event(eventId).observe(this, Observer {
             it?.let { event ->
-                activity.title = event.name
+                activity?.title = event.name
             }
         })
         val adapter = RecordAdapter()
@@ -77,7 +77,7 @@ class DetailFragment : Fragment() {
             R.id.menu_delete_event -> {
                 viewModel.deleteEvent(eventId)
                 Toast.makeText(activity, "Delete event", Toast.LENGTH_SHORT).show()
-                fragmentManager.popBackStack()
+                fragmentManager?.popBackStack()
             }
         }
         return super.onOptionsItemSelected(item)

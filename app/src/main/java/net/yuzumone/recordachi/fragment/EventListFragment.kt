@@ -23,16 +23,16 @@ class EventListFragment : Fragment(), AddRecordDialogFragment.OnAddRecordListene
         ViewModelProviders.of(this).get(EventListViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_event_list, container, false)
+        return inflater.inflate(R.layout.fragment_event_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         buttonAdd.setOnClickListener {
             val fragment = AddEventFragment()
-            fragmentManager.beginTransaction().replace(R.id.container, fragment)
+            fragmentManager!!.beginTransaction().replace(R.id.container, fragment)
                     .addToBackStack(null).commit()
         }
         val adapter = EventAdapter(getCheckClickCallback())
@@ -40,7 +40,7 @@ class EventListFragment : Fragment(), AddRecordDialogFragment.OnAddRecordListene
             override fun onItemClick(view: View, position: Int) {
                 val event = adapter.getItem(position)
                 val fragment = DetailFragment.newInstance(event.id)
-                fragmentManager.beginTransaction().replace(R.id.container, fragment)
+                fragmentManager!!.beginTransaction().replace(R.id.container, fragment)
                         .addToBackStack(null).commit()
             }
         })
@@ -68,6 +68,6 @@ class EventListFragment : Fragment(), AddRecordDialogFragment.OnAddRecordListene
 
     override fun onResume() {
         super.onResume()
-        activity.title = getString(R.string.app_name)
+        activity?.title = getString(R.string.app_name)
     }
 }
