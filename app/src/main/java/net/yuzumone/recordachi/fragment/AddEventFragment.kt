@@ -1,9 +1,13 @@
 package net.yuzumone.recordachi.fragment
 
+import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
@@ -14,14 +18,24 @@ import android.widget.TimePicker
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_add_event.*
 import net.yuzumone.recordachi.R
+import net.yuzumone.recordachi.extension.getBitmapFromUri
 import net.yuzumone.recordachi.model.Category
 import net.yuzumone.recordachi.model.Event
 import net.yuzumone.recordachi.model.Record
 import net.yuzumone.recordachi.viewmodel.AddEventViewModel
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    companion object {
+        private const val READ_STORAGE = 1234
+        private const val ADD_IMAGE_CODE = 5678
+    }
+    private var header: Bitmap? = null
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(this).get(AddEventViewModel::class.java)
@@ -47,7 +61,7 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
             dialog.show(fragmentManager, "time")
         }
         imageHeader.setOnClickListener {
-            // TODO
+            selectImage()
         }
     }
 
@@ -85,6 +99,11 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
                 viewModel.noneCategory.observe(this, Observer { category ->
                     val event = Event(name = eventName, categoryId = category!!.id)
                     val record = Record(time = time, eventId = event.id)
+                    if (header != null) {
+                        val stream = ByteArrayOutputStream()
+                        header!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
+                        event.image = stream.toByteArray()
+                    }
                     viewModel.insert(event, record)
                     fragmentManager?.popBackStack()
                 })
@@ -92,6 +111,11 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
                 val category = Category(name = categoryName)
                 val event = Event(name = eventName, categoryId = category.id)
                 val record = Record(time = time, eventId = event.id)
+                if (header != null) {
+                    val stream = ByteArrayOutputStream()
+                    header!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
+                    event.image = stream.toByteArray()
+                }
                 viewModel.insert(category, event, record)
                 fragmentManager?.popBackStack()
             }
@@ -103,6 +127,34 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
             AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left)
         } else {
             AnimationUtils.loadAnimation(activity, android.R.anim.slide_out_right)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    @AfterPermissionGranted(READ_STORAGE)
+    private fun selectImage() {
+        if (EasyPermissions.hasPermissions(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(intent, ADD_IMAGE_CODE)
+        } else {
+            EasyPermissions.requestPermissions(this, "STORAGE",
+                    READ_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ADD_IMAGE_CODE && resultCode == Activity.RESULT_OK) {
+            if (data == null) return
+            val uri = data.data
+            header = getBitmapFromUri(activity!!, uri)
+            imageHeader.setImageBitmap(header)
         }
     }
 }

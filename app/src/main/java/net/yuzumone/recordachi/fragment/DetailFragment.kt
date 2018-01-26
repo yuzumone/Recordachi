@@ -2,6 +2,7 @@ package net.yuzumone.recordachi.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -49,6 +50,11 @@ class DetailFragment : Fragment() {
         viewModel.event(eventId).observe(this, Observer {
             it?.let { event ->
                 activity?.title = event.name
+                if (event.image != null) {
+                    val array = event.image
+                    val bitmap = BitmapFactory.decodeByteArray(array, 0, array!!.size)
+                    imageHeader.setImageBitmap(bitmap)
+                }
             }
         })
         val adapter = RecordAdapter()
