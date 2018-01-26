@@ -20,6 +20,7 @@
             android:background="@color/colorPrimaryDark"
             android:clickable="true"
             android:focusable="true"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
