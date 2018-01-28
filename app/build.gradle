@@ -23,7 +23,7 @@ android {
     }
 }
 
-ext.support_version = "26.1.0"
+ext.support_version = "27.0.2"
 ext.arch_version = "1.0.0"
 
 dependencies {
