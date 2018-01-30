@@ -91,9 +91,9 @@ class DetailFragment : Fragment() {
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
         return if (enter) {
-            AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left)
+            AnimationUtils.loadAnimation(activity, R.anim.slide_in_top)
         } else {
-            AnimationUtils.loadAnimation(activity, android.R.anim.slide_out_right)
+            AnimationUtils.loadAnimation(activity, R.anim.slide_out_bottom)
         }
     }
 }
