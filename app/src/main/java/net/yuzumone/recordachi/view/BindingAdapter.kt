@@ -20,8 +20,7 @@ object BindingAdapter {
     @BindingAdapter("records")
     @JvmStatic
     fun setRecords(view: TextView, records: List<Record>) {
-        val diff = if (records.count() > 1) (records[records.lastIndex].time - records[records.lastIndex - 1].time) /
-                (1000 * 60 * 60 * 24) else 0
+        val diff = (System.currentTimeMillis() - records[records.lastIndex].time) / (1000 * 60 * 60 * 24)
         view.text = view.context.getString(R.string.day_format, diff)
     }
 
