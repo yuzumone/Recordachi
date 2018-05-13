@@ -20,8 +20,12 @@ object BindingAdapter {
     @BindingAdapter("records")
     @JvmStatic
     fun setRecords(view: TextView, records: List<Record>) {
-        val diff = (System.currentTimeMillis() - records[records.lastIndex].time) / (1000 * 60 * 60 * 24)
-        view.text = view.context.getString(R.string.day_format, diff)
+        if (records.isNotEmpty()) {
+            val diff = (System.currentTimeMillis() - records[records.lastIndex].time) / (1000 * 60 * 60 * 24)
+            view.text = view.context.getString(R.string.day_format, diff)
+        } else {
+            view.text = view.context.getString(R.string.day_format, 0)
+        }
     }
 
     @BindingAdapter("header")
