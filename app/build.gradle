@@ -27,7 +27,7 @@ android {
 }
 
 ext.support_version = "27.1.1"
-ext.lifecycle_version = "1.1.0"
+ext.lifecycle_version = "1.1.1"
 ext.room_version = "1.0.0"
 
 dependencies {
