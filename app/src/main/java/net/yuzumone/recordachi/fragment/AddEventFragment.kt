@@ -36,7 +36,7 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
         private const val ADD_IMAGE_CODE = 5678
     }
     private var header: Bitmap? = null
-
+    private val calender by lazy { Calendar.getInstance() }
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(this).get(AddEventViewModel::class.java)
     }
@@ -50,8 +50,9 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textDate.text = SimpleDateFormat("yyyy.M.dd", Locale.US).format(Date())
-        textTime.text = SimpleDateFormat("HH:mm", Locale.US).format(Date())
+        val date = Date()
+        textDate.text = SimpleDateFormat("yyyy.M.dd", Locale.US).format(date)
+        textTime.text = SimpleDateFormat("HH:mm", Locale.US).format(date)
         textDate.setOnClickListener {
             val dialog = DatePickerDialogFragment.newInstance(this)
             dialog.show(fragmentManager, "date")
@@ -79,19 +80,23 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        calender.set(Calendar.YEAR, year)
+        calender.set(Calendar.MONTH, month)
+        calender.set(Calendar.DAY_OF_MONTH, dayOfMonth)
         val monthOfYear = month + 1
         textDate.text = getString(R.string.date_format, year, monthOfYear, dayOfMonth)
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        calender.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        calender.set(Calendar.MINUTE, minute)
         textTime.text = getString(R.string.time_format, hourOfDay, minute)
     }
 
     private fun register() {
         val eventName = editEventName.text.toString()
         val categoryName = editCategory.text.toString()
-        val time = SimpleDateFormat("yyyy.M.ddHH:mm", Locale.US)
-                .parse(textDate.text.toString() + textTime.text.toString()).time
+        val time = calender.time.time
         if (eventName.isEmpty()) {
             Toast.makeText(activity, "Add event name", Toast.LENGTH_SHORT).show()
         } else {
