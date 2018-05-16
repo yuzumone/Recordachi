@@ -90,7 +90,7 @@
                 android:src="@drawable/ic_check"
                 app:layout_constraintTop_toBottomOf="@+id/imageHeader"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_goneMarginTop="32dp"
+                app:layout_goneMarginTop="64dp"
                 />
 
             <android.support.constraint.Guideline
