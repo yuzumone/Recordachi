@@ -15,6 +15,7 @@ import net.yuzumone.recordachi.R
 import net.yuzumone.recordachi.view.RecordAdapter
 import net.yuzumone.recordachi.viewmodel.DetailViewModel
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailFragment : Fragment() {
@@ -63,7 +64,8 @@ class DetailFragment : Fragment() {
         viewModel.records(eventId).observe(this, Observer {
             adapter.update(it)
             it?.let {
-                val last = DateFormat.getDateTimeInstance().format(Date(it.last().time))
+                val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.US)
+                val last = dateFormat.format(Date(it.last().time))
                 textLast.text = getString(R.string.last_format, last)
                 textCount.text = getString(R.string.count_format, it.count())
                 val ave = (0 until it.count() - 1)
