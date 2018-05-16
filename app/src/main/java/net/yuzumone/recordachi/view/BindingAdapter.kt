@@ -7,6 +7,7 @@ import android.widget.TextView
 import net.yuzumone.recordachi.R
 import net.yuzumone.recordachi.model.Record
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 object BindingAdapter {
@@ -14,7 +15,8 @@ object BindingAdapter {
     @BindingAdapter("time")
     @JvmStatic
     fun setTime(view: TextView, time: Long) {
-        view.text = DateFormat.getDateTimeInstance().format(Date(time))
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.US)
+        view.text = dateFormat.format(Date(time))
     }
 
     @BindingAdapter("records")
