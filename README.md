@@ -3,7 +3,7 @@
 [![language kotlin](https://img.shields.io/badge/language-kotlin-green.svg)](#)
 [![minSdkVersion 21](https://img.shields.io/badge/minSdkVersion-21-red.svg)](#)
 [![compileSdkVersion 27](https://img.shields.io/badge/compileSdkVersion-27-yellow.svg)](#)
-[![version v1.0.0](https://img.shields.io/badge/version-v1.0.0-blue.svg)](#)
+[![version v1.0.1](https://img.shields.io/badge/version-v1.0.1-blue.svg)](#)
 
 ## Overview
 It is an application to record the date when it performed.
