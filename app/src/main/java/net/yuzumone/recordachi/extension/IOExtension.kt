@@ -3,6 +3,7 @@ package net.yuzumone.recordachi.extension
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import java.util.concurrent.Executors
 
@@ -17,7 +18,7 @@ fun getBitmapFromUri(context: Context, uri: Uri): Bitmap {
     tmpOptions.inJustDecodeBounds = true
     BitmapFactory.decodeFileDescriptor(fileDescriptor, null, tmpOptions)
 
-    val image: Bitmap
+    var image: Bitmap
     val imageSizeMax = 512
     val imageScaleWidth = tmpOptions.outWidth.toFloat() / imageSizeMax
     val imageScaleHeight = tmpOptions.outHeight.toFloat() / imageSizeMax
@@ -30,12 +31,19 @@ fun getBitmapFromUri(context: Context, uri: Uri): Bitmap {
             imageScaleWidth).toDouble()).toInt()
         var i = 2
         while (i <= imageScale) {
-            options.inSampleSize = i
             i *= 2
         }
+        options.inSampleSize = i
         image = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options)
     } else {
         image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+    }
+    val toFileSize = 2090000
+    if (image.byteCount > toFileSize) {
+        val scale = Math.sqrt((toFileSize / image.byteCount).toDouble()).toFloat()
+        val matrix = Matrix()
+        matrix.postScale(scale, scale)
+        image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, true)
     }
     parcelFileDescriptor.close()
     return image
