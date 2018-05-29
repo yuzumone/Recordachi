@@ -34,6 +34,7 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
     companion object {
         private const val READ_STORAGE = 1234
         private const val ADD_IMAGE_CODE = 5678
+        private const val ARG_HEADER = "header"
     }
     private var header: Bitmap? = null
     private val calender by lazy { Calendar.getInstance() }
@@ -159,6 +160,19 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
             if (data == null) return
             val uri = data.data
             header = getBitmapFromUri(activity!!, uri)
+            imageHeader.setImageBitmap(header)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (header != null) outState.putParcelable(ARG_HEADER, header)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null && !savedInstanceState.isEmpty) {
+            header = savedInstanceState.getParcelable(ARG_HEADER)
             imageHeader.setImageBitmap(header)
         }
     }
