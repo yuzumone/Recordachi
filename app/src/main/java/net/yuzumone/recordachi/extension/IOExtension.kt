@@ -35,15 +35,15 @@ fun getBitmapFromUri(context: Context, uri: Uri): Bitmap {
         }
         options.inSampleSize = i
         image = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options)
+        val toFileSize = 2090000
+        if (image.byteCount > toFileSize) {
+            val scale = Math.sqrt((toFileSize / image.byteCount).toDouble()).toFloat()
+            val matrix = Matrix()
+            matrix.postScale(scale, scale)
+            image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, true)
+        }
     } else {
         image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-    }
-    val toFileSize = 2090000
-    if (image.byteCount > toFileSize) {
-        val scale = Math.sqrt((toFileSize / image.byteCount).toDouble()).toFloat()
-        val matrix = Matrix()
-        matrix.postScale(scale, scale)
-        image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, true)
     }
     parcelFileDescriptor.close()
     return image
