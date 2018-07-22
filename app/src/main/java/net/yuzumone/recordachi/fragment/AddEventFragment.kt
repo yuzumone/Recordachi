@@ -63,6 +63,7 @@ class AddEventFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePic
             dialog.show(fragmentManager, "time")
         }
         imageHeader.setOnClickListener {
+            header = null
             selectImage()
         }
     }
